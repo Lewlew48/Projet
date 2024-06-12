@@ -1,0 +1,290 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+th {
+    border: 2px solid #8FBB64;
+    vertical-align: middle;
+    background-color: #B2D68C;
+}
+
+thead {
+    border: 2px solid #8FBB64;
+    text-align: center;
+    vertical-align: top;
+}
+
+td {
+    border-left: 2px solid #8FBB64;
+    border-right: 2px solid #8FBB64;
+    height: 40px;
+}
+
+tbody {
+    border-bottom: 2px solid #8FBB64;
+}
+
+tr:nth-child(even) {
+    background-color: #EEEEEE;
+}
+
+body {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+td svg {
+    color: darksalmon;
+}
+
+h1 {
+    color: #B2D68C;
+    text-transform: uppercase;
+}
+
+.icone {
+    color: #B2D68C;
+}
+
+.plus {
+    color: forestgreen;
+}
+
+.plus:hover {
+    color: darksalmon;
+}
+
+.selection {
+    margin-left: 20px;
+}
+
+.menu-selection {
+    vertical-align: bottom;
+    margin-left: 20px;
+    margin-bottom: 0px;
+    font-size: 17px;
+}
+
+.plus, .menu-selection {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.icone, h1 {
+    display: inline-block;
+    vertical-align: middle; /* Aligne les éléments verticalement */
+}
+
+hr {
+    position: relative;
+    background-color: #8FBB64;
+    border: none;
+    height: 2px;
+    opacity: 100%;
+}
+
+.menu {
+    text-decoration: none;
+}
+
+.carousel .carousel-item {
+    height: 500px;
+}
+
+.carousel-item img {
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    min-height: 500px;
+}
+
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.55);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+    line-height: 20px;
+    margin-bottom: 120px;
+    margin-right: 31px;
+}
+
+.menu {
+    text-align: center;
+    color: forestgreen;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+}
+
+.ajouter {
+    max-width: 600px;
+}
+
+.table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+
+
+.form-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 500px;
+}
+
+.form-container .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-container .form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+.form-container .form-group button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+}
+
+.form-container .form-group button:hover {
+    background-color: #0056b3;
+}
+
+#delete {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.qte {
+    width: 10%;
+}
+
+.requis {
+    color: red;
+}
+
+.left-menu {
+    background-color: blueviolet;
+    margin-left: 11px;
+}
+
+.left-menu a {
+    text-decoration: none;
+    color: white;
+}
+
+.row > * {
+    flex-shrink: 1;
+}
+
+.logo {
+    width: auto;
+    height: 100px;
+    margin-right: 0;
+}
+
+.bandeau-cont {
+    color: blueviolet;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    background-image: url('/Intranet/img/bandeau.jpg');
+    background-size: cover; /* ou contain */
+    background-position-y: center;
+    height: 116px;
+}
+
+.header {
+    height: 100%;
+    margin-left: 0;
+}
+
+.boutton {
+    background-color: white;
+    border: none;
+}
+
+h5 {
+    color: #8FBB64;
+    text-decoration: underline;
+    text-decoration-color: #8FBB64;
+}
+
+.form-group {
+    padding-bottom: 10px;
+}
+
+.footer {
+    margin-left: 11px;
+    text-align: center;
+    color: forestgreen;
+    background-color: #fff;
+    margin-right: 0;
+}
+
+.action {
+    border: none;
+    background-color: transparent;
+}
+
+*, ::after, ::before {
+    box-sizing: unset;
+}
+
+
+
+.main-content {
+    margin-left: 11px;
+    margin-right: 0;
+}
+
+h3 {
+    text-align: center;
+}
+
+tbody input {
+    width: 100%;
+    border: 0;
+    background-color: transparent;
+}
+
+tbody select {
+    border: 0;
+    background-color: transparent;
+}
+
+.liste {
+    margin-left: 25px;
+}
+
+td input, td select {
+    text-align: center;
+}
