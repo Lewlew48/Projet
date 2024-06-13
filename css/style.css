@@ -1,290 +1,469 @@
+/* Définit la largeur de la table à 100% */
 table {
+    /* Fusionne les bordures des cellules de la table */
     width: 100%;
     border-collapse: collapse;
+    /* Ajoute une marge supérieure de 20px à la table */
     margin-top: 20px;
+    /* Centre le texte dans les cellules de la table */
     text-align: center;
+    /* Centre le contenu verticalement dans les cellules de la table */
     vertical-align: middle;
 }
 
+/* Styles pour les cellules d'en-tête de la table */
 th {
+    /* Ajoute une bordure solide de 2px avec la couleur #8FBB64 */
     border: 2px solid #8FBB64;
+    /* Centre le contenu verticalement dans les cellules d'en-tête */
     vertical-align: middle;
+    /* Définit la couleur de fond des cellules d'en-tête */
     background-color: #B2D68C;
 }
 
+/* Styles pour la section d'en-tête de la table */
 thead {
+    /* Ajoute une bordure solide de 2px avec la couleur #8FBB64 */
     border: 2px solid #8FBB64;
+    /* Centre le texte dans l'en-tête de la table */
     text-align: center;
+    /* Aligne le contenu en haut de l'en-tête de la table */
     vertical-align: top;
 }
 
+/* Styles pour les cellules de données de la table */
 td {
+    /* Ajoute une bordure solide gauche de 2px avec la couleur #8FBB64 */
     border-left: 2px solid #8FBB64;
+    /* Ajoute une bordure solide droite de 2px avec la couleur #8FBB64 */
     border-right: 2px solid #8FBB64;
+    /* Définit la hauteur des cellules de données de la table */
     height: 40px;
 }
 
+/* Styles pour la section du corps de la table */
 tbody {
+    /* Ajoute une bordure solide inférieure de 2px avec la couleur #8FBB64 */
     border-bottom: 2px solid #8FBB64;
 }
 
+/* Styles pour les lignes paires du corps de la table */
 tr:nth-child(even) {
+    /* Définit la couleur de fond des lignes paires */
     background-color: #EEEEEE;
 }
 
+/* Styles pour le corps de la page */
 body {
+    /* Ajoute une marge droite de 20px */
     margin-right: 20px;
+    /* Ajoute une marge gauche de 20px */
     margin-left: 20px;
 }
 
+/* Styles pour les icônes SVG dans les cellules de données */
 td svg {
+    /* Définit la couleur des icônes SVG */
     color: darksalmon;
 }
 
+/* Styles pour les titres de niveau 1 (h1) */
 h1 {
+    /* Définit la couleur des titres de niveau 1 */
     color: #B2D68C;
+    /* Convertit le texte en majuscules */
     text-transform: uppercase;
 }
 
+/* Styles pour la classe "icone" */
 .icone {
+    /* Définit la couleur des éléments avec la classe "icone" */
     color: #B2D68C;
 }
 
+/* Styles pour la classe "plus" */
 .plus {
+    /* Définit la couleur des éléments avec la classe "plus" */
     color: forestgreen;
 }
 
+/* Styles pour la classe "plus" lors du survol */
 .plus:hover {
+    /* Définit la couleur des éléments avec la classe "plus" lors du survol */
     color: darksalmon;
 }
 
+/* Styles pour la classe "selection" */
 .selection {
+    /* Ajoute une marge gauche de 20px */
     margin-left: 20px;
 }
 
+/* Styles pour la classe "menu-selection" */
 .menu-selection {
+    /* Aligne le contenu en bas */
     vertical-align: bottom;
+    /* Ajoute une marge gauche de 20px */
     margin-left: 20px;
+    /* Supprime la marge inférieure */
     margin-bottom: 0px;
+    /* Définit la taille de la police */
     font-size: 17px;
 }
 
+/* Styles pour les classes "plus" et "menu-selection" */
 .plus, .menu-selection {
+    /* Affiche les éléments en tant que blocs en ligne */
     display: inline-block;
+    /* Aligne les éléments verticalement */
     vertical-align: middle;
 }
 
+/* Styles pour les classes "icone" et "h1" */
 .icone, h1 {
+    /* Affiche les éléments en tant que blocs en ligne */
     display: inline-block;
+    /* Aligne les éléments verticalement */
     vertical-align: middle; /* Aligne les éléments verticalement */
 }
 
+/* Styles pour les séparateurs horizontaux (hr) */
 hr {
+    /* Positionne l'élément relativement par rapport à son conteneur parent */
     position: relative;
+    /* Définit la couleur de fond du séparateur */
     background-color: #8FBB64;
+    /* Supprime la bordure par défaut */
     border: none;
+    /* Définit la hauteur du séparateur */
     height: 2px;
+    /* Définit l'opacité du séparateur */
     opacity: 100%;
 }
 
+/* Styles pour la classe "menu" */
 .menu {
+    /* Supprime la décoration de texte par défaut (soulignement) */
     text-decoration: none;
 }
 
+/* Styles pour les éléments de carrousel */
 .carousel .carousel-item {
+    /* Définit la hauteur des éléments de carrousel */
     height: 500px;
 }
 
+/* Styles pour les images dans les éléments de carrousel */
 .carousel-item img {
+    /* Positionne l'image absolument par rapport à son conteneur parent */
     position: absolute;
+    /* Définir l'ajustement de l'objet à "cover" pour couvrir toute la zone */
     object-fit: cover;
+    /* Positionne l'image en haut et à gauche du conteneur parent */
     top: 0;
     left: 0;
+    /* Définit la hauteur minimale de l'image */
     min-height: 500px;
 }
 
+/* Styles pour la légende du carrousel */
 .carousel-caption {
+    /* Définit la couleur de fond de la légende */
     background: rgba(0, 0, 0, 0.55);
 }
 
+/* Styles pour le corps de la page */
 body {
+    /* Définit la famille de polices */
     font-family: Arial, sans-serif;
+    /* Ajoute une marge de 20px */
     margin: 20px;
+    /* Supprime le rembourrage par défaut */
     padding: 0;
+    /* Définit l'interligne */
     line-height: 20px;
+    /* Ajoute une marge inférieure de 120px */
     margin-bottom: 120px;
+    /* Ajoute une marge droite de 31px */
     margin-right: 31px;
 }
 
+/* Styles pour la classe "menu" */
 .menu {
+    /* Centre le texte */
     text-align: center;
+    /* Définit la couleur du texte */
     color: forestgreen;
 }
 
+/* Styles pour la classe "container" */
 .container {
+    /* Centre le conteneur horizontalement */
     margin: 0 auto;
+    /* Ajoute un rembourrage de 10px */
     padding: 10px;
+    /* Définit la couleur de fond du conteneur */
     background-color: #fff;
+    /* Arrondi les coins du conteneur */
     border-radius: 5px;
+    /* Ajoute une ombre portée au conteneur */
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    /* Ajoute une bordure solide de 1px avec la couleur #ccc */
     border: 1px solid #ccc;
 }
 
+/* Styles pour la classe "ajouter" */
 .ajouter {
+    /* Définit la largeur maximale du conteneur */
     max-width: 600px;
 }
 
+/* Styles pour la classe "table" */
 .table {
+    /* Définit la largeur de la table à 100% */
     width: 100%;
+    /* Ajoute une marge supérieure et inférieure de 20px */
     margin: 20px 0;
+    /* Fusionne les bordures des cellules de la table */
     border-collapse: collapse;
 }
 
 
+/* Styles pour la classe "form-container" */
 .form-container {
+    /* Définit la couleur de fond du conteneur de formulaire */
     background-color: #fff;
+    /* Ajoute un rembourrage de 30px */
     padding: 30px;
+    /* Arrondi les coins du conteneur de formulaire */
     border-radius: 8px;
+    /* Ajoute une ombre portée au conteneur de formulaire */
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    /* Définit la largeur du conteneur de formulaire à 90% */
     width: 90%;
+    /* Définit la largeur maximale du conteneur de formulaire à 500px */
     max-width: 500px;
 }
 
+/* Styles pour les étiquettes (label) dans le conteneur de formulaire */
 .form-container .form-group label {
+    /* Affiche les étiquettes en tant que blocs */
     display: block;
+    /* Ajoute une marge inférieure de 5px */
     margin-bottom: 5px;
+    /* Définit le poids de la police des étiquettes */
     font-weight: bold;
 }
 
+/* Styles pour les champs de saisie (input) dans le conteneur de formulaire */
 .form-container .form-group input {
+    /* Définit la largeur des champs de saisie à 100% */
     width: 100%;
+    /* Ajoute un rembourrage de 10px */
     padding: 10px;
+    /* Arrondi les coins des champs de saisie */
     border-radius: 5px;
+    /* Ajoute une bordure solide de 1px avec la couleur #ccc */
     border: 1px solid #ccc;
+    /* Ajoute une marge inférieure de 15px */
     margin-bottom: 15px;
 }
 
+/* Styles pour les boutons dans le conteneur de formulaire */
 .form-container .form-group button {
+    /* Définit la largeur des boutons à 100% */
     width: 100%;
+    /* Ajoute un rembourrage de 10px */
     padding: 10px;
+    /* Supprime la bordure par défaut */
     border: none;
+    /* Définit la couleur de fond du bouton */
     background-color: #007BFF;
+    /* Définit la couleur du texte du bouton */
     color: #fff;
+    /* Définit le curseur du bouton à "pointer" */
     cursor: pointer;
 }
 
+/* Styles pour les boutons lors du survol */
 .form-container .form-group button:hover {
+    /* Définit la couleur de fond du bouton lors du survol */
     background-color: #0056b3;
 }
 
+/* Styles pour l'élément avec l'ID "delete" */
 #delete {
+    /* Positionne l'élément en position fixe par rapport à la fenêtre */
     position: fixed;
+    /* Positionne l'élément en bas à droite de la fenêtre */
     bottom: 10px;
     right: 10px;
 }
 
+/* Styles pour la classe "qte" */
 .qte {
+    /* Définit la largeur de l'élément à 10% */
     width: 10%;
 }
 
+/* Styles pour la classe "requis" */
 .requis {
+    /* Définit la couleur du texte en rouge */
     color: red;
 }
 
+/* Styles pour la classe "left-menu" */
 .left-menu {
+    /* Définit la couleur de fond de la barre latérale gauche */
     background-color: blueviolet;
+    /* Ajoute une marge gauche de 11px */
     margin-left: 11px;
 }
 
+/* Styles pour les liens dans la barre latérale gauche */
 .left-menu a {
+    /* Supprime la décoration de texte par défaut (soulignement) */
     text-decoration: none;
+    /* Définit la couleur du texte en blanc */
     color: white;
 }
 
+/* Styles pour les éléments enfants de la classe "row" */
 .row > * {
+    /* Définit la propriété flex-shrink à 1 */
     flex-shrink: 1;
 }
 
+/* Styles pour la classe "logo" */
 .logo {
+    /* Définit la largeur de l'image à "auto" (s'adapte à la hauteur définie) */
     width: auto;
+    /* Définit la hauteur de l'image à 100px */
     height: 100px;
+    /* Supprime la marge droite par défaut */
     margin-right: 0;
 }
 
+/* Styles pour la classe "bandeau-cont" */
 .bandeau-cont {
+    /* Définit la couleur du texte */
     color: blueviolet;
+    /* Affiche les éléments en tant que flexbox */
     display: flex;
+    /* Aligne les éléments verticalement au centre */
     align-items: center;
+    /* Définit la taille de la police */
     font-size: 20px;
+    /* Définit l'image de fond */
     background-image: url('/Intranet/img/bandeau.jpg');
+    /* Définit la taille de l'image de fond à "cover" */
     background-size: cover; /* ou contain */
+    /* Définit la position verticale de l'image de fond au centre */
     background-position-y: center;
+    /* Définit la hauteur du bandeau */
     height: 116px;
 }
 
+/* Styles pour la classe "header" */
 .header {
+    /* Définit la hauteur du conteneur d'en-tête */
     height: 100%;
+    /* Supprime la marge gauche par défaut */
     margin-left: 0;
 }
 
+/* Styles pour la classe "boutton" */
 .boutton {
+    /* Définit la couleur de fond du bouton */
     background-color: white;
+    /* Supprime la bordure par défaut */
     border: none;
 }
 
+/* Styles pour les titres de niveau 5 (h5) */
 h5 {
+    /* Définit la couleur du texte */
     color: #8FBB64;
+    /* Ajoute un soulignement au texte */
     text-decoration: underline;
+    /* Définit la couleur du soulignement */
     text-decoration-color: #8FBB64;
 }
 
+/* Styles pour la classe "form-group" */
 .form-group {
+    /* Ajoute un rembourrage inférieur de 10px */
     padding-bottom: 10px;
 }
 
+/* Styles pour la classe "footer" */
 .footer {
+    /* Ajoute une marge gauche de 11px */
     margin-left: 11px;
+    /* Centre le texte */
     text-align: center;
+    /* Définit la couleur du texte */
     color: forestgreen;
+    /* Définit la couleur de fond du pied de page */
     background-color: #fff;
+    /* Supprime la marge droite par défaut */
     margin-right: 0;
 }
 
+/* Styles pour la classe "action" */
 .action {
+    /* Supprime la bordure par défaut */
     border: none;
+    /* Définit la couleur de fond à transparente */
     background-color: transparent;
 }
 
+/* Styles pour tous les éléments, y compris les éléments pseudo-classes "::after" et "::before" */
 *, ::after, ::before {
+    /* Désactive la propriété box-sizing par défaut */
     box-sizing: unset;
 }
 
 
-
+/* Styles pour la classe "main-content" */
 .main-content {
+    /* Ajoute une marge gauche de 11px */
     margin-left: 11px;
+    /* Supprime la marge droite par défaut */
     margin-right: 0;
 }
 
+/* Styles pour les titres de niveau 3 (h3) */
 h3 {
+    /* Centre le texte */
     text-align: center;
 }
 
+/* Styles pour les champs de saisie (input) et les listes déroulantes (select) dans le corps de la table */
 tbody input {
+    /* Définit la largeur du champ de saisie à 100% */
     width: 100%;
+    /* Supprime la bordure par défaut */
     border: 0;
+    /* Définit la couleur de fond à transparente */
     background-color: transparent;
 }
 
 tbody select {
+    /* Supprime la bordure par défaut */
     border: 0;
+    /* Définit la couleur de fond à transparente */
     background-color: transparent;
 }
 
+/* Styles pour la classe "liste" */
 .liste {
+    /* Ajoute une marge gauche de 25px */
     margin-left: 25px;
 }
 
+/* Styles pour les champs de saisie (input) et les listes déroulantes (select) dans les cellules de données */
 td input, td select {
+    /* Centre le texte */
     text-align: center;
 }
