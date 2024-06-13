@@ -253,7 +253,7 @@ session_start();
                             </svg>
                         </button>
                     </form>
-                    <table  class="col-12">
+                    <table class="col-12">
                         <thead>
                         <tr>
                             <th scope="col" rowspan="2" class="col-1">Numéro</th>
@@ -278,30 +278,35 @@ session_start();
 
                         <?php
                         $val = 0;
-                        for ($i = ($limite - 50); $i < $limite; $i++) {
-                            $val++;
-                            if ($i < 0) {
-                                break;
-                            }
-                            if (isset($conventions[$i]) && $conventions[$i] != NULL) {
-                                $convention = $conventions[$i];
+                        if (empty($conventions)) {
+                            echo '<tr>';
+                            echo '<td colspan="14" class="text-center">Aucune donnée trouvée</td>';
+                            echo '</tr>';
+                        } else {
+                            for ($i = ($limite - 50); $i < $limite; $i++) {
+                                $val++;
+                                if ($i < 0) {
+                                    break;
+                                }
+                                if (isset($conventions[$i]) && $conventions[$i] != NULL) {
+                                    $convention = $conventions[$i];
 
-                                echo '<tr>';
-                                echo '<td>' . $convention['dateCreation'][2] . $convention['dateCreation'][3] . '-' . sprintf("%04d", $convention['id']) . '</td>';
-                                echo '<td>' . $convention['dateCreation'] . '</td>';
-                                echo '<td>' . $convention['libelle'] . '</td>';
-                                echo '<td>' . $convention['direction'] . '</td>';
-                                echo '<td>' . $convention['instructeur'] . '</td>';
-                                echo '<td>' . $convention['attributaire'] . '</td>';
-                                echo '<td>' . $convention['chapitre'] . '</td>';
-                                echo '<td>' . $convention['article'] . '</td>';
-                                echo '<td>' . $convention['divers'] . '</td>';
-                                echo '<td>' . $convention['montant'] . ' €</td>';
-                                echo '<td>' . $convention['annule'] . '</td>';
-                                echo '<td>' . $convention['prive'] . '</td>';
-                                if (isset($_SESSION['role']) && isset($_SESSION['nom_dir'])) {
-                                    if ($_SESSION['role'] == 'admin' || $_SESSION['nom_dir'] == $convention['direction']) {
-                                        echo '<td>
+                                    echo '<tr>';
+                                    echo '<td>' . $convention['dateCreation'][2] . $convention['dateCreation'][3] . '-' . sprintf("%04d", $convention['id']) . '</td>';
+                                    echo '<td>' . $convention['dateCreation'] . '</td>';
+                                    echo '<td>' . $convention['libelle'] . '</td>';
+                                    echo '<td>' . $convention['direction'] . '</td>';
+                                    echo '<td>' . $convention['instructeur'] . '</td>';
+                                    echo '<td>' . $convention['attributaire'] . '</td>';
+                                    echo '<td>' . $convention['chapitre'] . '</td>';
+                                    echo '<td>' . $convention['article'] . '</td>';
+                                    echo '<td>' . $convention['divers'] . '</td>';
+                                    echo '<td>' . $convention['montant'] . ' €</td>';
+                                    echo '<td>' . $convention['annule'] . '</td>';
+                                    echo '<td>' . $convention['prive'] . '</td>';
+                                    if (isset($_SESSION['role']) && isset($_SESSION['nom_dir'])) {
+                                        if ($_SESSION['role'] == 'admin' || $_SESSION['nom_dir'] == $convention['direction']) {
+                                            echo '<td>
                 <form method="post" action="../portal-factory/modifier/modifier_conventions.php">
                 <input type="hidden" name="id" value="' . $convention['id'] . '">
                 <button type="submit" class="action" title="Modifier">
@@ -321,17 +326,17 @@ session_start();
                 </form>
               </td>';
 
+                                        } else {
+                                            echo '<td></td>';
+                                        }
                                     } else {
                                         echo '<td></td>';
                                     }
+                                    echo '</tr>';
                                 } else {
-                                    echo '<td></td>';
+                                    break;
                                 }
-                                echo '</tr>';
-                            } else {
-                                break;
                             }
-
                         }
                         ?>
                         </tbody>

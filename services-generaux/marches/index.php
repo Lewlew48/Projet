@@ -278,30 +278,35 @@ session_start();
 
                         <?php
                         $val = 0;
-                        for ($i = ($limite - 50); $i < $limite; $i++) {
-                            $val++;
-                            if ($i < 0) {
-                                break;
-                            }
-                            if (isset($marches[$i]) && $marches[$i] != NULL) {
-                                $marche = $marches[$i];
+                        if (empty($marches)) {
+                            echo '<tr>';
+                            echo '<td colspan="14" class="text-center">Aucune donnée trouvée</td>';
+                            echo '</tr>';
+                        } else {
+                            for ($i = ($limite - 50); $i < $limite; $i++) {
+                                $val++;
+                                if ($i < 0) {
+                                    break;
+                                }
+                                if (isset($marches[$i]) && $marches[$i] != NULL) {
+                                    $marche = $marches[$i];
 
-                                echo '<tr>';
-                                echo '<td>' . $marche['dateCreation'][2] . $marche['dateCreation'][3] . '-' . sprintf("%04d", $marche['id']) . '</td>';
-                                echo '<td>' . $marche['dateCreation'] . '</td>';
-                                echo '<td>' . $marche['libelle'] . '</td>';
-                                echo '<td>' . $marche['direction'] . '</td>';
-                                echo '<td>' . $marche['instructeur'] . '</td>';
-                                echo '<td>' . $marche['attributaire'] . '</td>';
-                                echo '<td>' . $marche['codePostal'] . '</td>';
-                                echo '<td>' . $marche['type'] . '</td>';
-                                echo '<td>' . $marche['procedure'] . '</td>';
-                                echo '<td>' . $marche['montant'] . ' €</td>';
-                                echo '<td>' . $marche['annule'] . '</td>';
-                                echo '<td>' . $marche['prive'] . '</td>';
-                                if (isset($_SESSION['role']) && isset($_SESSION['nom_dir'])) {
-                                    if ($_SESSION['role'] == 'admin' || $_SESSION['nom_dir'] == $marche['direction']) {
-                                        echo '<td>
+                                    echo '<tr>';
+                                    echo '<td>' . $marche['dateCreation'][2] . $marche['dateCreation'][3] . '-' . sprintf("%04d", $marche['id']) . '</td>';
+                                    echo '<td>' . $marche['dateCreation'] . '</td>';
+                                    echo '<td>' . $marche['libelle'] . '</td>';
+                                    echo '<td>' . $marche['direction'] . '</td>';
+                                    echo '<td>' . $marche['instructeur'] . '</td>';
+                                    echo '<td>' . $marche['attributaire'] . '</td>';
+                                    echo '<td>' . $marche['codePostal'] . '</td>';
+                                    echo '<td>' . $marche['type'] . '</td>';
+                                    echo '<td>' . $marche['procedure'] . '</td>';
+                                    echo '<td>' . $marche['montant'] . ' €</td>';
+                                    echo '<td>' . $marche['annule'] . '</td>';
+                                    echo '<td>' . $marche['prive'] . '</td>';
+                                    if (isset($_SESSION['role']) && isset($_SESSION['nom_dir'])) {
+                                        if ($_SESSION['role'] == 'admin' || $_SESSION['nom_dir'] == $marche['direction']) {
+                                            echo '<td>
                 <form method="post" action="../portal-factory/modifier/modifier_marches.php">
                 <input type="hidden" name="id" value="' . $marche['id'] . '">
                 <button type="submit" class="action" title="Modifier">
@@ -321,17 +326,17 @@ session_start();
                 </form>
               </td>';
 
+                                        } else {
+                                            echo '<td></td>';
+                                        }
                                     } else {
                                         echo '<td></td>';
                                     }
+                                    echo '</tr>';
                                 } else {
-                                    echo '<td></td>';
+                                    break;
                                 }
-                                echo '</tr>';
-                            } else {
-                                break;
                             }
-
                         }
                         ?>
                         </tbody>

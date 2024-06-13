@@ -278,30 +278,35 @@ session_start();
 
                         <?php
                         $val = 0;
-                        for ($i = ($limite - 50); $i < $limite; $i++) {
-                            $val++;
-                            if ($i < 0) {
-                                break;
-                            }
-                            if (isset($accords[$i]) && $accords[$i] != NULL) {
-                                $accord = $accords[$i];
+                        if (empty($accords)) {
+                            echo '<tr>';
+                            echo '<td colspan="14" class="text-center">Aucune donnée trouvée</td>';
+                            echo '</tr>';
+                        } else {
+                            for ($i = ($limite - 50); $i < $limite; $i++) {
+                                $val++;
+                                if ($i < 0) {
+                                    break;
+                                }
+                                if (isset($accords[$i]) && $accords[$i] != NULL) {
+                                    $accord = $accords[$i];
 
-                                echo '<tr>';
-                                echo '<td>' . $accord['dateCreation'][2] . $accord['dateCreation'][3] . '-' . sprintf("%04d", $accord['id']) . '</td>';
-                                echo '<td>' . $accord['dateCreation'] . '</td>';
-                                echo '<td>' . $accord['libelle'] . '</td>';
-                                echo '<td>' . $accord['direction'] . '</td>';
-                                echo '<td>' . $accord['instructeur'] . '</td>';
-                                echo '<td>' . $accord['attributaire'] . '</td>';
-                                echo '<td>' . $accord['codePostal'] . '</td>';
-                                echo '<td>' . $accord['type'] . '</td>';
-                                echo '<td>' . $accord['procedure'] . '</td>';
-                                echo '<td>' . $accord['montant'] . ' €</td>';
-                                echo '<td>' . $accord['annule'] . '</td>';
-                                echo '<td>' . $accord['prive'] . '</td>';
-                                if (isset($_SESSION['role']) && isset($_SESSION['nom_dir'])) {
-                                    if ($_SESSION['role'] == 'admin' || $_SESSION['nom_dir'] == $accord['direction']) {
-                                        echo '<td>
+                                    echo '<tr>';
+                                    echo '<td>' . $accord['dateCreation'][2] . $accord['dateCreation'][3] . '-' . sprintf("%04d", $accord['id']) . '</td>';
+                                    echo '<td>' . $accord['dateCreation'] . '</td>';
+                                    echo '<td>' . $accord['libelle'] . '</td>';
+                                    echo '<td>' . $accord['direction'] . '</td>';
+                                    echo '<td>' . $accord['instructeur'] . '</td>';
+                                    echo '<td>' . $accord['attributaire'] . '</td>';
+                                    echo '<td>' . $accord['codePostal'] . '</td>';
+                                    echo '<td>' . $accord['type'] . '</td>';
+                                    echo '<td>' . $accord['procedure'] . '</td>';
+                                    echo '<td>' . $accord['montant'] . ' €</td>';
+                                    echo '<td>' . $accord['annule'] . '</td>';
+                                    echo '<td>' . $accord['prive'] . '</td>';
+                                    if (isset($_SESSION['role']) && isset($_SESSION['nom_dir'])) {
+                                        if ($_SESSION['role'] == 'admin' || $_SESSION['nom_dir'] == $accord['direction']) {
+                                            echo '<td>
                 <form method="post" action="../portal-factory/modifier/modifier_accords_cadres.php">
                 <input type="hidden" name="id" value="' . $accord['id'] . '">
                 <button type="submit" class="action" title="Modifier">
@@ -321,17 +326,17 @@ session_start();
                 </form>
               </td>';
 
+                                        } else {
+                                            echo '<td></td>';
+                                        }
                                     } else {
                                         echo '<td></td>';
                                     }
+                                    echo '</tr>';
                                 } else {
-                                    echo '<td></td>';
+                                    break;
                                 }
-                                echo '</tr>';
-                            } else {
-                                break;
                             }
-
                         }
                         ?>
                         </tbody>

@@ -42,7 +42,7 @@ session_start();
             <div class="row">
                 <div>
                     <label for="q">Recherche:</label>
-                    <input type="text" id="q" placeholder="Entrez votre texte ici..." value="">
+                    <input class="Recherche" type="text" id="q" placeholder="Entrez votre texte ici..." value="">
                     <br>
                     <label>
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red"
@@ -112,7 +112,7 @@ session_start();
                                 echo "<td><input class='requis' type='text' name='nom' id='nom' value='" . $row['nom_In'] . "'disabled /></td>";
                                 echo "<td><input class='requis' type='text' name='prenom' id='prenom' value='" . $row['prenom_In'] . "' disabled/></td>";
                                 echo "<td><input class='requis' type='text' name='identifiant' id='identifiant' value='" . $row['identifiant_In'] . "' disabled/></td>";
-                                echo "<td><input class='requis' type='password' name='password' id='password" . $row['id_In'] . "' value='" . $row['password_In'] . "' readonly disabled/><input class='requis' type='radio' name='changer' title='Réinitialiser le mot de passe' onclick=\"getElementById('password" . $row['id_In'] . "').value='' \" disabled></td>";
+                                echo "<td><input class='requis' type='password' name='password' id='password" . $row['id_In'] . "' value='" . $row['password_In'] . "' readonly/><input class='requis' type='radio' name='changer' title='Réinitialiser le mot de passe' onclick=\"getElementById('password" . $row['id_In'] . "').value='' \"></td>";
                                 echo "<td><select class='requis' name='role' id='role' disabled>";
                                 if ($row['role_In'] == 'admin') {
                                     echo "<option class='requis' selected value='admin'>admin</option>";
@@ -238,41 +238,30 @@ session_start();
         input.addEventListener("input", filterTable);
     });
 
-    // Récupérez le champ d'identifiant
-    const identifiantInput = document.getElementById('identifiantAjout');
+    document.addEventListener("DOMContentLoaded", function () {
+        // Récupérez le bouton "
+        const btn = document.getElementById('btnAjouter');
+        //
+        const input = document.getElementById('identifiantAjout');
 
-    // Récupérez le bouton "Ajouter"
-    const boutonAjouter = document.getElementById('btnAjouter');
+        // Obtenez le tableau et les éléments d'entrée
+        let table = document.querySelector("table");
 
-    // Écoutez les modifications de l'identifiant
-    identifiantInput.addEventListener('input', () => {
-        // Vérifiez si l'identifiant est rempli
-        boutonAjouter.disabled = identifiantInput.value.trim() === '';
-    });
+        // Fonction pour filtrer les lignes en fonction de la valeur d'entrée
+        function filterId() {
+            let filter = input.value;
+            let rows = table.getElementsByTagName("tr");
 
-    let table = document.querySelector("table");
-    let input = document.querySelector("#identifiantAjout");
+            for (let i = 1; i < rows.length; i++) {
+                let identifiant = rows[i].getElementsByTagName("td")[3].getElementsByTagName("input")[0].value;
 
-    // Fonction pour filtrer les lignes en fonction de la valeur d'entrée
-    function filterTable() {
-        let filter = input.value.toLowerCase();
-        let rows = table.getElementsByTagName("tr");
-
-        for (let i = 1; i < rows.length; i++) {
-            let name = rows[i].getElementsByTagName("td")[1].getElementsByTagName("input")[0].value.toLowerCase();
-            let prenom = rows[i].getElementsByTagName("td")[2].getElementsByTagName("input")[0].value.toLowerCase();
-
-            if (name.includes(filter) || prenom.includes(filter)) {
-                rows[i].style.display = "";
-            } else {
-                rows[i].style.display = "none";
+                btn.disabled = identifiant === filter;
             }
         }
-    }
 
-    // Ajoutez un écouteur d'événements au champ d'entrée
-    input.addEventListener("input", filterTable);
-
+        // Ajoutez un écouteur d'événements au champ d'entrée
+        input.addEventListener("input", filterId);
+    });
 
 </script>
 </body>

@@ -1,8 +1,8 @@
 <div class="row footer"> <!-- Début de la section pied de page -->
     <div class="container col-xl-13 col-sm-13 mb-3">
         <footer>
-            <a href="/Intranet/legal.php">Mentions légales</a> |; // Lien vers la page des mentions légales
-            <a href="mailto:contact@lozere.fr">Nous contacter</a>; // Lien pour contacter le site par email
+            <a href="/Intranet/legal.php">Mentions légales</a> |
+            <a href="mailto:contact@lozere.fr">Nous contacter</a>
         </footer>
 
         <div class="copyright"> <!-- Section des droits d'auteur -->

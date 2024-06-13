@@ -278,30 +278,35 @@ session_start();
 
                         <?php
                         $val = 0;
-                        for ($i = ($limite - 50); $i < $limite; $i++) {
-                            $val++;
-                            if ($i < 0) {
-                                break;
-                            }
-                            if (isset($arretes[$i]) && $arretes[$i] != NULL) {
-                                $arrete = $arretes[$i];
+                        if (empty($arretes)) {
+                            echo '<tr>';
+                            echo '<td colspan="14" class="text-center">Aucune donnée trouvée</td>';
+                            echo '</tr>';
+                        } else {
+                            for ($i = ($limite - 50); $i < $limite; $i++) {
+                                $val++;
+                                if ($i < 0) {
+                                    break;
+                                }
+                                if (isset($arretes[$i]) && $arretes[$i] != NULL) {
+                                    $arrete = $arretes[$i];
 
-                                echo '<tr>';
-                                echo '<td>' . $arrete['dateCreation'][2] . $arrete['dateCreation'][3] . '-' . sprintf("%04d", $arrete['id']) . '</td>';
-                                echo '<td>' . $arrete['dateCreation'] . '</td>';
-                                echo '<td>' . $arrete['libelle'] . '</td>';
-                                echo '<td>' . $arrete['direction'] . '</td>';
-                                echo '<td>' . $arrete['instructeur'] . '</td>';
-                                echo '<td>' . $arrete['attributaire'] . '</td>';
-                                echo '<td>' . $arrete['chapitre'] . '</td>';
-                                echo '<td>' . $arrete['article'] . '</td>';
-                                echo '<td>' . $arrete['divers'] . '</td>';
-                                echo '<td>' . $arrete['montant'] . ' €</td>';
-                                echo '<td>' . $arrete['annule'] . '</td>';
-                                echo '<td>' . $arrete['prive'] . '</td>';
-                                if (isset($_SESSION['role']) && isset($_SESSION['nom_dir'])) {
-                                    if ($_SESSION['role'] == 'admin' || $_SESSION['nom_dir'] == $arrete['direction']) {
-                                        echo '<td>
+                                    echo '<tr>';
+                                    echo '<td>' . $arrete['dateCreation'][2] . $arrete['dateCreation'][3] . '-' . sprintf("%04d", $arrete['id']) . '</td>';
+                                    echo '<td>' . $arrete['dateCreation'] . '</td>';
+                                    echo '<td>' . $arrete['libelle'] . '</td>';
+                                    echo '<td>' . $arrete['direction'] . '</td>';
+                                    echo '<td>' . $arrete['instructeur'] . '</td>';
+                                    echo '<td>' . $arrete['attributaire'] . '</td>';
+                                    echo '<td>' . $arrete['chapitre'] . '</td>';
+                                    echo '<td>' . $arrete['article'] . '</td>';
+                                    echo '<td>' . $arrete['divers'] . '</td>';
+                                    echo '<td>' . $arrete['montant'] . ' €</td>';
+                                    echo '<td>' . $arrete['annule'] . '</td>';
+                                    echo '<td>' . $arrete['prive'] . '</td>';
+                                    if (isset($_SESSION['role']) && isset($_SESSION['nom_dir'])) {
+                                        if ($_SESSION['role'] == 'admin' || $_SESSION['nom_dir'] == $arrete['direction']) {
+                                            echo '<td>
                 <form method="post" action="../portal-factory/modifier/modifier_arretes.php">
                 <input type="hidden" name="id" value="' . $arrete['id'] . '">
                 <button type="submit" class="action" title="Modifier">
@@ -321,17 +326,17 @@ session_start();
                 </form>
               </td>';
 
+                                        } else {
+                                            echo '<td></td>';
+                                        }
                                     } else {
                                         echo '<td></td>';
                                     }
+                                    echo '</tr>';
                                 } else {
-                                    echo '<td></td>';
+                                    break;
                                 }
-                                echo '</tr>';
-                            } else {
-                                break;
                             }
-
                         }
                         ?>
                         </tbody>
