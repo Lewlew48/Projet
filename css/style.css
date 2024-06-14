@@ -467,3 +467,7 @@ td input, td select {
     /* Centre le texte */
     text-align: center;
 }
+
+.form-control {
+    padding: 0;
+}
