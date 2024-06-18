@@ -328,12 +328,6 @@ body {
     color: white;
 }
 
-/* Styles pour les éléments enfants de la classe "row" */
-.row > * {
-    /* Définit la propriété flex-shrink à 1 */
-    flex-shrink: 1;
-}
-
 /* Styles pour la classe "logo" */
 .logo {
     /* Définit la largeur de l'image à "auto" (s'adapte à la hauteur définie) */
@@ -472,7 +466,11 @@ td input, td select {
     padding: 0;
 }
 
-.btn_retour{
+.btn_retour {
     text-decoration: none;
     color: black;
+}
+
+.col-12 {
+    flex-shrink: 1;
 }

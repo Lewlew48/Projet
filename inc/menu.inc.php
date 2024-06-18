@@ -1,7 +1,7 @@
 <!-- Début de la section du menu de gauche -->
-<div class="left-menu container col-xl-2 col-sm-12 mb-3">
+<div class="left-menu container col-xl-2 col-sm-12 mb-3" style="flex-shrink: 1;">
     <!-- Section des liens vers les pages -->
-    <section id="menu">
+    <section id="menu" style="flex-shrink: 1;">
         <header>
             <h3>Pages</h3>
         </header>
@@ -15,7 +15,7 @@
         </ul>
     </section>
     <!-- Section de l'espace personnalisé pour chaque utilisateur -->
-    <section id="sidentifier">
+    <section id="sidentifier" style="flex-shrink: 1;">
         <header>
             <h3>Espace <?php
                 // Affichage du rôle de l'utilisateur connecté

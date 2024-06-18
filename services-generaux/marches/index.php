@@ -121,7 +121,7 @@ session_start();
             <!-- Mise en page par ligne pour une meilleure adaptation -->
             <div class="row">
                 <!-- Adaptation du contenu -->
-                <div class="col-12">
+                <div class="col-12 table-responsive" style="flex-shrink: 1;">
                     <!-- Lien vers l'accueil -->
                     <a href="../../" class="menu" title="Accueil">
                         <!-- Icone -->
@@ -337,40 +337,44 @@ session_start();
                         <!-- Première ligne -->
                         <tr>
                             <!-- Id -->
-                            <th scope="col" rowspan="2" class="col-1">Numéro</th>
+                            <th scope="col" rowspan="2">Numéro</th>
                             <!-- Date de création -->
-                            <th scope="col" rowspan="2" class="col-1">Date de création</th>
+                            <th scope="col" rowspan="2">Date de création</th>
                             <!-- Libellé -->
-                            <th scope="col" rowspan="2" class="col-2">Libellé</th>
+                            <th scope="col" rowspan="2">Libellé</th>
                             <!-- Direction -->
-                            <th scope="col" rowspan="2" class="col-1">Direction</th>
+                            <th scope="col" rowspan="2">Direction</th>
                             <!-- Instructeur -->
-                            <th scope="col" rowspan="2" class="col-1">Instructeur</th>
+                            <th scope="col" rowspan="2">Instructeur</th>
                             <!-- Attributaire -->
-                            <th scope="col" rowspan="2" class="col-1">Attributaire</th>
-                            <!-- Code postal -->
-                            <th scope="col" rowspan="2">Code postal</th>
-                            <!-- Commune -->
-                            <th scope="col" rowspan="2" class="col-1">Cummune</th>
+                            <th scope="col" rowspan="2">Attributaire</th>
+                            <!-- Adresse -->
+                            <th scope="col" colspan="2">Adresse</th>
                             <!-- Type -->
-                            <th scope="col" rowspan="2" class="col-1">Type</th>
+                            <th scope="col" rowspan="2">Type</th>
                             <!-- Procédure -->
-                            <th scope="col" rowspan="2" class="col-1">Procédure</th>
+                            <th scope="col" rowspan="2">Procédure</th>
                             <!-- Montants -->
-                            <th scope="col" colspan="3" class="col-2">Montants</th>
+                            <th scope="col" colspan="3">Montants</th>
                             <!-- Propriétés -->
-                            <th scope="col" colspan="2" class="col-1">Propriétés</th>
+                            <th scope="col" colspan="2">Propriétés</th>
+                            <!-- Commentaires -->
+                            <th scope="col" rowspan="2">Commentaires</th>
                             <!-- Actions disponibles -->
-                            <th scope="col" rowspan="2" class="col-1">Action</th>
+                            <th scope="col" rowspan="2">Action</th>
                         </tr>
                         <!-- Eléments dans les propriétés -->
                         <tr>
+                            <!-- Code postal -->
+                            <th scope="col">Code postal</th>
+                            <!-- Commune -->
+                            <th scope="col">Cummune</th>
                             <!-- Montant HT -->
-                            <th scope="col" >Montant</th>
+                            <th scope="col">Montant</th>
                             <!-- Montant min -->
-                            <th scope="col" class="col-1">Min</th>
+                            <th scope="col">Min</th>
                             <!-- Montant max -->
-                            <th scope="col" class="col-1">Max</th>
+                            <th scope="col">Max</th>
                             <!-- Annulé -->
                             <th scope="col">Annulé</th>
                             <!-- Privé -->
@@ -415,11 +419,12 @@ session_start();
                                     echo '<td>' . $marche['commune'] . '</td>'; // Affichage de la commune
                                     echo '<td>' . $marche['type'] . '</td>'; // Affichage du type d'accord
                                     echo '<td>' . $marche['procedure'] . '</td>'; // Affichage de la procédure
-                                    echo '<td>' . $marche['montant'] . ' €</td>'; // Affichage du montant en euros
-                                    echo '<td>' . $marche['montantMin'] . ' €</td>'; // Affichage du montant minimum en euros
-                                    echo '<td>' . $marche['montantMax'] . ' €</td>'; // Affichage du montant maximum en euros
+                                    echo '<td>' . $marche['montant'] . '€</td>'; // Affichage du montant en euros
+                                    echo '<td>' . $marche['montantMin'] . '€</td>'; // Affichage du montant minimum en euros
+                                    echo '<td>' . $marche['montantMax'] . '€</td>'; // Affichage du montant maximum en euros
                                     echo '<td>' . $marche['annule'] . '</td>'; // Affichage du statut d'annulation
                                     echo '<td>' . $marche['prive'] . '</td>'; // Affichage du statut privé
+                                    echo '<td>' . $marche['commentaires'] . '</td>'; // Affichage du statut privé
                                     // Vérifier le rôle de l'utilisateur et la direction pour afficher les options de modification et de suppression
                                     if (isset($_SESSION['role']) && isset($_SESSION['nom_dir'])) {
                                         if ($_SESSION['role'] == 'admin' || $_SESSION['nom_dir'] == $marche['direction'] || $_SESSION['nom_dir'] == "Service des marchés") {
@@ -474,7 +479,6 @@ session_start();
                             echo '<td colspan="16" class="text-center">Aucune donnée trouvée</td>';
                             echo '</tr>';
                         }
-                        $limite = 0;
                         ?>
                         </tbody>
                     </table>

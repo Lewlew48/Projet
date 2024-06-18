@@ -406,7 +406,7 @@ session_start();
                                     echo '<td>' . $convention['chapitre'] . '</td>';
                                     echo '<td>' . $convention['article'] . '</td>';
                                     echo '<td>' . $convention['divers'] . '</td>';
-                                    echo '<td>' . $convention['montant'] . ' €</td>';
+                                    echo '<td>' . $convention['montant'] . '€</td>';
                                     echo '<td>' . $convention['annule'] . '</td>';
                                     echo '<td>' . $convention['prive'] . '</td>';
                                     // Vérifier le rôle de l'utilisateur et la direction pour afficher les options de modification et de suppression

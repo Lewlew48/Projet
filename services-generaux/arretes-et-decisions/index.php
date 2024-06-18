@@ -406,7 +406,7 @@ session_start();
                                     echo '<td>' . $arrete['chapitre'] . '</td>'; // Affichage du chapitre
                                     echo '<td>' . $arrete['article'] . '</td>'; // Affichage de l'article
                                     echo '<td>' . $arrete['divers'] . '</td>'; // Affichage des informations diverses
-                                    echo '<td>' . $arrete['montant'] . ' €</td>'; // Affichage du montant en euros
+                                    echo '<td>' . $arrete['montant'] . '€</td>'; // Affichage du montant en euros
                                     echo '<td>' . $arrete['annule'] . '</td>'; // Affichage du statut d'annulation
                                     echo '<td>' . $arrete['prive'] . '</td>'; // Affichage du statut privé
                                     // Vérifier le rôle de l'utilisateur et la direction pour afficher les options de modification et de suppression

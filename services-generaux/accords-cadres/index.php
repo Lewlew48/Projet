@@ -408,7 +408,7 @@ session_start();
                                     echo '<td>' . $accord['codePostal'] . '</td>'; // Affichage du code postal
                                     echo '<td>' . $accord['type'] . '</td>'; // Affichage du type d'accord
                                     echo '<td>' . $accord['procedure'] . '</td>'; // Affichage de la procédure
-                                    echo '<td>' . $accord['montant'] . ' €</td>'; // Affichage du montant en euros
+                                    echo '<td>' . $accord['montant'] . '€</td>'; // Affichage du montant en euros
                                     echo '<td>' . $accord['annule'] . '</td>'; // Affichage du statut d'annulation
                                     echo '<td>' . $accord['prive'] . '</td>'; // Affichage du statut privé
                                     // Vérifier le rôle de l'utilisateur et la direction pour afficher les options de modification et de suppression

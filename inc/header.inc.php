@@ -1,7 +1,7 @@
 <!-- En-tête de la page -->
 <div class="row header">
     <!-- Conteneur pour l'en-tête -->
-    <div class="container col-xl-12 col-sm-12 mb-3 row">
+    <div class="container col-xl-12 col-sm-12 mb-3 row" style="flex-shrink: 1;">
         <!-- Section du logo -->
         <div class="col-sm-1 col-lg-1 col-xl-1 logo">
             <!-- Lien vers la page d'accueil avec le logo -->

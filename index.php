@@ -50,7 +50,7 @@ session_start();
                     </a>
                     <hr/>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" style=" width: 98%;">
                             <div class="carousel slide" id="carousel">
                                 <div class="carousel-indicators">
                                     <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"
