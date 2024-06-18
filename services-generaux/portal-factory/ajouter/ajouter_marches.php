@@ -92,14 +92,23 @@ session_start();
                             $titre = $_POST['titre'];
                             $libelle = $_POST['titre'];
                             $attributaire = $_POST['attributaire'];
-                            $chapitre = $_POST['codePostal'];
+                            $cp = $_POST['codePostal'];
+                            $commune = $_POST['commune'];
                             $article = $_POST['type'];
                             $divers = $_POST['procedure'];
                             $montant = $_POST['montant'];
+                            if (isset($_POST['montantMin']) && isset($_POST['montantMax'])) {
+                                $montantMin = $_POST['montantMin'];
+                                $montantMax = $_POST['montantMax'];
+                            } else {
+                                $montantMin = 0.0;
+                                $montantMax = 0.0;
+                            }
                             $prive = isset($_POST['prive']) ? 1 : 0;
                             $annule = isset($_POST['annule']) ? 1 : 0;
-                            $date = date('Y-m-d');
+                            $date = $_POST['date'] ?? date('Y-m-d');
                             $qte = $_POST['qte'];
+                            $commentaires = $_POST['commentaires'];
 
                             // Boucle pour insérer les données en fonction de la quantité
                             for ($i = 0; $i < $qte; $i++) {
@@ -111,19 +120,23 @@ session_start();
                                 }
 
                                 // Requête SQL pour insérer les données dans la base de données
-                                $sql = "INSERT INTO marche (dateCreation_Ma, libelle_Ma, attributaire_Ma, codePostal_Ma, id_Ty, id_Pr, montantHT_Ma, annule_Ma, prive_Ma, id_In) VALUES (:date, :libelle, :attributaire, :codePostal, :type, :procedure, :montant, :annule, :prive, :id_In)";
+                                $sql = "INSERT INTO marche (dateCreation_Ma, libelle_Ma, attributaire_Ma, codePostal_Ma,commune_Ma, id_Ty, id_Pr, montantHT_Ma,montantMin_Ma,montantMax_Ma, annule_Ma, prive_Ma,commentaires_Ma, id_In) VALUES (:date, :libelle, :attributaire, :codePostal,:commune, :type, :procedure, :montant,:montantMin,:montantMax, :annule, :prive,:commentaires, :id_In)";
                                 $stmt = $pdo->prepare($sql);
 
                                 // Liaison des paramètres
                                 $stmt->bindParam(':date', $date);
                                 $stmt->bindParam(':libelle', $libelle);
                                 $stmt->bindParam(':attributaire', $attributaire);
-                                $stmt->bindParam(':codePostal', $chapitre);
+                                $stmt->bindParam(':codePostal', $cp);
+                                $stmt->bindParam(':commune', $commune);
                                 $stmt->bindParam(':type', $article);
                                 $stmt->bindParam(':procedure', $divers);
                                 $stmt->bindParam(':montant', $montant);
+                                $stmt->bindParam(':montantMin', $montantMin);
+                                $stmt->bindParam(':montantMax', $montantMax);
                                 $stmt->bindParam(':annule', $annule);
                                 $stmt->bindParam(':prive', $prive);
+                                $stmt->bindParam(':commentaires', $commentaires);
                                 $stmt->bindParam(':id_In', $id_In);
 
                                 // Exécution de la requête
@@ -133,13 +146,28 @@ session_start();
                             // Gestion des erreurs
                             echo "Erreur : " . $e->getMessage();
                         }
-                        header("Location:../../accords-cadres");
                     }
                     ?>
                     <!-- Contenu du formulaire -->
                     <div class='container d-flex justify-content-center ajouter'>
                         <!-- Formulaire d'ajout -->
                         <form method="post">
+                            <?php if ($_SESSION["nom_dir"] == "Service des marchés") { ?>
+                                <div class="form-group">
+                                    <label>
+                                        <!-- Icone -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red"
+                                             class="bi bi-exclamation-square-fill" viewBox="0 0 16 16">
+                                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                                        </svg>
+                                        Date
+                                    </label>
+                                    <!-- Zone de saisie -->
+                                    <label>
+                                        <input type="date" name="date" required class='form-control'>
+                                    </label>
+                                </div>
+                            <?php } ?>
                             <!-- Groupement d'éléments -->
                             <div class="form-group">
                                 <label>
@@ -151,13 +179,17 @@ session_start();
                                     Titre
                                 </label>
                                 <!-- Zone de saisie -->
-                                <input type="text" name="titre" required class='form-control'>
+                                <label>
+                                    <input type="text" name="titre" required class='form-control'>
+                                </label>
                             </div>
                             <!-- Groupement d'éléments -->
                             <div class="form-group">
                                 <label>Attributaire / Bénéficiaire:</label>
                                 <!-- Zone de saisie-->
-                                <input type="text" name="attributaire" class='form-control'>
+                                <label>
+                                    <input type="text" name="attributaire" class='form-control'>
+                                </label>
                             </div>
                             <!-- Groupement d'éléments -->
                             <div class="form-group">
@@ -170,19 +202,45 @@ session_start();
                                     Montant:
                                 </label>
                                 <!-- Zone de saisie -->
-                                <input type="number" step="0.01" name="montant" required value='0.0'
-                                       class='form-control'>
+                                <label>
+                                    <input type="number" step="0.01" name="montant" required value='0.0'
+                                           class='form-control'>
+                                </label>
+                                <label>
+                                    <input type="checkbox" checked name="Min/Max" onchange="ajoutMinMax()">
+                                </label>
+                                <label for="Min/Max">Ajouter un Min / Max</label>
+                            </div>
+                            <div class="form-group MinMax" id="MinMax">
+                                <label>
+                                    Montant Min:
+                                </label>
+                                <!-- Zone de saisie -->
+                                <label>
+                                    <input type="number" step="0.01" name="montantMin" value='0.0' class='form-control'>
+                                </label>
+                                <label>
+                                    Montant Max:
+                                </label>
+                                <!-- Zone de saisie -->
+                                <label>
+                                    <input type="number" step="0.01" name="montantMax" value='0.0' class='form-control'>
+                                </label>
                             </div>
                             <!-- Groupement d'éléments -->
                             <div class="form-group">
                                 <!-- Case à cocher -->
-                                <input type="checkbox" name="prive">
+                                <label>
+                                    <input type="checkbox" name="prive">
+                                </label>
                                 <label>Privé</label>
                             </div>
                             <!-- Groupement d'éléments -->
                             <div class="form-group">
                                 <!-- Case à cocher -->
-                                <input type="checkbox" name="annule">
+                                <label>
+                                    <input type="checkbox" name="annule">
+                                </label>
                                 <label>Annulé</label>
                             </div>
                             <!-- Groupement d'éléments -->
@@ -196,7 +254,23 @@ session_start();
                                     Code Postal :
                                 </label>
                                 <!-- Zone de saisie -->
-                                <input type="text" name="codePostal" required class='form-control'>
+                                <label for="codePostal"></label>
+                                <input type="text" name="codePostal" id="codePostal" required
+                                       class='form-control'>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <!-- Icone -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red"
+                                         class="bi bi-exclamation-square-fill" viewBox="0 0 16 16">
+                                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                                    </svg>
+                                    Commune :
+                                </label>
+                                <!-- Zone de saisie -->
+                                <label for="commune"></label>
+                                <input type="text" name="commune" id="commune" required
+                                       class='form-control'>
                             </div>
                             <!-- Groupement d'éléments -->
                             <div class="form-group">
@@ -209,6 +283,7 @@ session_start();
                                     Type :
                                 </label>
                                 <!-- Sélection -->
+                                <label for="type"></label>
                                 <select name="type" id="type" class='form' required>
                                     <?php
                                     foreach ($types as $type) {
@@ -228,6 +303,7 @@ session_start();
                                     Procédure :
                                 </label>
                                 <!-- Sélection -->
+                                <label for="procedure"></label>
                                 <select name="procedure" id="procedure" class='form' required>
                                     <?php
                                     foreach ($procedures as $procedure) {
@@ -235,6 +311,15 @@ session_start();
                                     }
                                     ?>
                                 </select>
+                            </div>
+                            <!-- Groupement d'éléments -->
+                            <div class="form-group">
+                                <label>
+                                    Commentaires :
+                                </label>
+                                <!-- Zone de saisie -->
+                                <label for="commentaires"></label>
+                                <input type="text" name="commentaires" id="commentaires" class='form-control'>
                             </div>
                             <!-- Groupement d'éléments -->
                             <div class="form-group">
@@ -277,6 +362,8 @@ session_start();
                                 <button type="submit">Enregistrer</button>
                                 <!-- Bouton annuler -->
                                 <button type="button" onclick="window.history.back()">Annuler</button>
+                                <!-- Bouton retour -->
+                                <button><a href="../../marches" class="btn_retour">Retour</a></button>
                             </div>
                         </form>
                     </div>

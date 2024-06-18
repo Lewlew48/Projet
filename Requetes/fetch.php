@@ -282,11 +282,15 @@ function fetchMarches($mois, $annee, $sql, $count, $param) // Définit une fonct
             'libelle' => $row['libelle_Ma'],
             'attributaire' => $attributaire,
             'codePostal' => $row['codePostal_Ma'],
+            'commune' => $row['commune_Ma'],
             'type' => $row['nom_Ty'],
             'procedure' => $row['nom_Pr'],
             'montant' => $row['montantHT_Ma'],
+            'montantMin' => $row['montantMin_Ma'],
+            'montantMax' => $row['montantMax_Ma'],
             'annule' => $annule,
             'prive' => $prive,
+            'commentaires' => $row['commentaires_Ma'],
             'direction' => $row['nom_Di'],
             'instructeur' => ucfirst($row['prenom_In']) . ' ' . strtoupper($row['nom_In'])
         );

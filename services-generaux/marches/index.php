@@ -331,7 +331,7 @@ session_start();
                         </button>
                     </form>
                     <!-- Tableau d'affichage -->
-                    <table>
+                    <table id="table">
                         <!-- Entête du tableau -->
                         <thead>
                         <!-- Première ligne -->
@@ -341,7 +341,7 @@ session_start();
                             <!-- Date de création -->
                             <th scope="col" rowspan="2" class="col-1">Date de création</th>
                             <!-- Libellé -->
-                            <th scope="col" rowspan="2" class="col-3">Libellé</th>
+                            <th scope="col" rowspan="2" class="col-2">Libellé</th>
                             <!-- Direction -->
                             <th scope="col" rowspan="2" class="col-1">Direction</th>
                             <!-- Instructeur -->
@@ -349,13 +349,15 @@ session_start();
                             <!-- Attributaire -->
                             <th scope="col" rowspan="2" class="col-1">Attributaire</th>
                             <!-- Code postal -->
-                            <th scope="col" rowspan="2" class="col-1">Code postal</th>
+                            <th scope="col" rowspan="2">Code postal</th>
+                            <!-- Commune -->
+                            <th scope="col" rowspan="2" class="col-1">Cummune</th>
                             <!-- Type -->
                             <th scope="col" rowspan="2" class="col-1">Type</th>
                             <!-- Procédure -->
                             <th scope="col" rowspan="2" class="col-1">Procédure</th>
-                            <!-- Montant HT -->
-                            <th scope="col" rowspan="2" class="col-1">Montant HT</th>
+                            <!-- Montants -->
+                            <th scope="col" colspan="3" class="col-2">Montants</th>
                             <!-- Propriétés -->
                             <th scope="col" colspan="2" class="col-1">Propriétés</th>
                             <!-- Actions disponibles -->
@@ -363,41 +365,45 @@ session_start();
                         </tr>
                         <!-- Eléments dans les propriétés -->
                         <tr>
+                            <!-- Montant HT -->
+                            <th scope="col" >Montant</th>
+                            <!-- Montant min -->
+                            <th scope="col" class="col-1">Min</th>
+                            <!-- Montant max -->
+                            <th scope="col" class="col-1">Max</th>
                             <!-- Annulé -->
                             <th scope="col">Annulé</th>
                             <!-- Privé -->
                             <th scope="col">Privé</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="corps">
 
                         <?php
                         // Initialisation de la valeur minimale des éléments affichés
                         $val = 0;
-                        // Si aucune donnée n'est retournée
-                        if (empty($marches)) {
-                            // Affichage d'un message
-                            echo '<tr>';
-                            echo '<td colspan="14" class="text-center">Aucune donnée trouvée</td>';
-                            echo '</tr>';
-                        } // Sinon
-                        else {
-                            // Boucle pour afficher les données
-                            for ($i = ($limite - 50);
-                                 $i < $limite;
-                                 $i++) {
-                                // Incrémentation de la valeur minimale des éléments affichés
-                                $val++;
-                                // Si le nombre d'éléments affichés est supérieur à 50
-                                if ($i < 0) {
-                                    // Fermeture de la boucle
-                                    break;
+                        // Boucle pour afficher les données
+                        $i = ($limite - 50);
+                        while ($i < $limite) {
+                            // Incrémentation de la valeur minimale des éléments affichés
+                            $val++;
+                            // Si le nombre d'éléments affichés est supérieur à 50
+                            if ($i < 0) {
+                                // Fermeture de la boucle
+                                break;
+                            }
+                            // Si les éléments à afficher sont disponibles
+                            if (isset($marches[$i]) && $marches[$i] != NULL) {
+                                // Récupération de l'élément à afficher
+                                $marche = $marches[$i];
+                                // Affichage du tableau des marchés
+                                $bloque = "";
+                                for ($j = 0; $j <= 4; $j++) {
+                                    if ($marche['direction'] == "Service des marchés" && (int)(date("W", (int)($marche['dateCreation']))) == (int)(date("W", (int)(date("Y-m-d"))) - $j) && $_SESSION['nom_dir'] != "Service des marchés") {
+                                        $bloque = $marche['id'];
+                                    }
                                 }
-                                // Si les éléments à afficher sont disponibles
-                                if (isset($marches[$i]) && $marches[$i] != NULL) {
-                                    // Récupération de l'élément à afficher
-                                    $marche = $marches[$i];
-                                    // Affichage du tableau des accords
+                                if ($marche['id'] != $bloque) {
                                     echo '<tr>';
                                     echo '<td>' . $marche['dateCreation'][2] . $marche['dateCreation'][3] . '-' . sprintf("%04d", $marche['id']) . '</td>'; // Affichage de la date de création avec l'ID
                                     echo '<td>' . $marche['dateCreation'] . '</td>'; // Affichage de la date de création
@@ -406,42 +412,45 @@ session_start();
                                     echo '<td>' . $marche['instructeur'] . '</td>'; // Affichage de l'instructeur
                                     echo '<td>' . $marche['attributaire'] . '</td>'; // Affichage de l'attributaire
                                     echo '<td>' . $marche['codePostal'] . '</td>'; // Affichage du code postal
+                                    echo '<td>' . $marche['commune'] . '</td>'; // Affichage de la commune
                                     echo '<td>' . $marche['type'] . '</td>'; // Affichage du type d'accord
                                     echo '<td>' . $marche['procedure'] . '</td>'; // Affichage de la procédure
                                     echo '<td>' . $marche['montant'] . ' €</td>'; // Affichage du montant en euros
+                                    echo '<td>' . $marche['montantMin'] . ' €</td>'; // Affichage du montant minimum en euros
+                                    echo '<td>' . $marche['montantMax'] . ' €</td>'; // Affichage du montant maximum en euros
                                     echo '<td>' . $marche['annule'] . '</td>'; // Affichage du statut d'annulation
                                     echo '<td>' . $marche['prive'] . '</td>'; // Affichage du statut privé
                                     // Vérifier le rôle de l'utilisateur et la direction pour afficher les options de modification et de suppression
                                     if (isset($_SESSION['role']) && isset($_SESSION['nom_dir'])) {
-                                        if ($_SESSION['role'] == 'admin' || $_SESSION['nom_dir'] == $marche['direction']) {
+                                        if ($_SESSION['role'] == 'admin' || $_SESSION['nom_dir'] == $marche['direction'] || $_SESSION['nom_dir'] == "Service des marchés") {
                                             // Bouton de modification
                                             echo '<td>
-                                    <!-- Formualire de modification -->
-                                    <form method="post" action="../portal-factory/modifier/modifier_marches.php">
-                                        <!-- Envoie de l\'id de l\'élément -->
-                                        <input type="hidden" name="id" value="' . $marche['id'] . '">
-                                        <!-- Boutton de modification -->
-                                        <button type="submit" class="action" title="Modifier">
-                                            <!-- Icone -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                    <!-- Formulaire de suppréssion -->
-                                    <form method="post" action="../portal-factory/supprimer/supprimer.php?type=Marche">
-                                        <!-- Envoie de l\'id de l\'élément -->
-                                        <input type="hidden" name="id" value="' . $marche['id'] . '">
-                                        <!-- Boutton de supression -->
-                                        <button type="submit" class="action" title="Supprimer">
-                                            <!-- Icone -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </td>';
+                                                    <!-- Formualire de modification -->
+                                                    <form method="post" action="../portal-factory/modifier/modifier_marches.php">
+                                                        <!-- Envoie de l\'id de l\'élément -->
+                                                        <input type="hidden" name="id" value="' . $marche['id'] . '">
+                                                        <!-- Boutton de modification -->
+                                                        <button type="submit" class="action" title="Modifier">
+                                                            <!-- Icone -->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                    <!-- Formulaire de suppréssion -->
+                                                    <form method="post" action="../portal-factory/supprimer/supprimer.php?type=Marche">
+                                                        <!-- Envoie de l\'id de l\'élément -->
+                                                        <input type="hidden" name="id" value="' . $marche['id'] . '">
+                                                        <!-- Boutton de supression -->
+                                                        <button type="submit" class="action" title="Supprimer">
+                                                            <!-- Icone -->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                </td>';
                                         } else {
                                             echo '<td></td>'; // Afficher une cellule vide si l'utilisateur n'a pas les autorisations nécessaires
                                         }
@@ -450,10 +459,22 @@ session_start();
                                     }
                                     echo '</tr>'; // Fin de la ligne du tableau
                                 } else {
-                                    break;
+                                    $limite++;
+                                    $val--;
                                 }
+                            } else {
+                                break;
                             }
+                            $i++;
                         }
+                        // Si aucune donnée n'est retournée
+                        if ($val <= 1) {
+                            // Affichage d'un message
+                            echo '<tr>';
+                            echo '<td colspan="16" class="text-center">Aucune donnée trouvée</td>';
+                            echo '</tr>';
+                        }
+                        $limite = 0;
                         ?>
                         </tbody>
                     </table>
@@ -559,6 +580,9 @@ session_start();
         document.getElementById('annee').value = document.getElementById('start').value.slice(0, 4);
         this.form.submit();
     });
+    if ($('#table tr').length == 0) {
+        document.getElementById('corps').innerHTML = '<tr><td colspan="14" class="text-center">Aucune donnée trouvée</td></tr>';
+    }
 </script>
 </body>
 </html>

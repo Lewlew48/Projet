@@ -277,6 +277,8 @@ session_start();
                                 <button type="submit">Enregistrer</button>
                                 <!-- Bouton annuler -->
                                 <button type="button" onclick="window.history.back()">Annuler</button>
+                                <!-- Bouton retour -->
+                                <button><a href="../../accords-cadres" class="btn_retour">Retour</a></button>
                             </div>
                         </form>
                     </div>

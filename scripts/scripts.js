@@ -54,3 +54,26 @@ function validRefFormat(input) { // Valide le format d'une entrée de référenc
         msg.style.backgroundColor = "white"; // Réinitialise la couleur de fond du message d'erreur
     }
 }
+
+function ajoutMinMax() {
+    if (document.getElementById("MinMax").innerHTML == "") {
+        document.getElementById("MinMax").innerHTML = "<label>\n" +
+            "                                    Montant Min:\n" +
+            "                                </label>\n" +
+            "                                <!-- Zone de saisie -->\n" +
+            "                                <label>\n" +
+            "                                    <input type=\"number\" step=\"0.01\" name=\"montantMin\" value='0.0'\n" +
+            "                                           class='form-control'>\n" +
+            "                                </label>" +
+            "                                <label>\n" +
+            "                                    Montant Max:\n" +
+            "                                </label>\n" +
+            "                                <!-- Zone de saisie -->\n" +
+            "                                <label>\n" +
+            "                                    <input type=\"number\" step=\"0.01\" name=\"montantMax\" value='0.0'\n" +
+            "                                           class='form-control'>\n" +
+            "                                </label>"
+    } else {
+        document.getElementById("MinMax").innerHTML = "";
+    }
+}
