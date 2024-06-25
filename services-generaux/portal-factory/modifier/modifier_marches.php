@@ -34,8 +34,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$id]);
 $marche = $stmt->fetch();
 
-// Inclure l'en-tête
-include("../../../inc/header.inc.php");
+
 // Vérifier si la requête est de type POST
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['titre'])) {
     try {
@@ -56,20 +55,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['titre'])) {
         }
         $prive = isset($_POST['prive']) ? 1 : 0;
         $annule = isset($_POST['annule']) ? 1 : 0;
-        if (isset($_POST['date'])) {
-            $date = $_POST['date'];
-        }
+        $datenotif = $_POST['date'] ?? date('Y-m-d');
+        $duree = $_POST['duree'];
         $commentaires = $_POST['commentaires'];
 
         // Requête SQL pour insérer les données
-        $sql = "UPDATE marche SET libelle_Ma = :libelle, attributaire_Ma = :attributaire, codePostal_Ma = :codePostal,commune_Ma=:commune, id_Ty = :type, id_Pr = :procedure, montantHT_Ma = :montant,montantMin_Ma = :montantMin,montantMax_Ma = :montantMax, annule_Ma = :annule, prive_Ma = :prive,commentaires_Ma = :commentaires";
-        if (isset($_POST['date'])) {
-            $sql .= ", dateCreation_Ma = :date";
-        }
-        $sql .= " WHERE id_Ma = :id_Ma";
+        $sql = "UPDATE marche SET dateNotif_Ma = :date, duree_Ma = :duree, libelle_Ma = :libelle, attributaire_Ma = :attributaire, codePostal_Ma = :codePostal,commune_Ma=:commune, id_Ty = :type, id_Pr = :procedure, montantHT_Ma = :montant,montantMin_Ma = :montantMin,montantMax_Ma = :montantMax, annule_Ma = :annule, prive_Ma = :prive,commentaires_Ma = :commentaires WHERE id_Ma = :id_Ma";
         $stmt = $pdo->prepare($sql);
 
         // Liaison des paramètres
+        $stmt->bindParam(':date', $datenotif);
+        $stmt->bindParam(':duree', $duree);
         $stmt->bindParam(':libelle', $libelle);
         $stmt->bindParam(':attributaire', $attributaire);
         $stmt->bindParam(':codePostal', $chapitre);
@@ -83,9 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['titre'])) {
         $stmt->bindParam(':prive', $prive);
         $stmt->bindParam(':commentaires', $commentaires);
         $stmt->bindParam(':id_Ma', $id);
-        if (isset($_POST['date'])) {
-            $stmt->bindParam(':date', $date);
-        }
 
         // Exécution de la requête
         $stmt->execute();
@@ -116,6 +109,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['titre'])) {
 </head>
 <!-- Corps de la page -->
 <body class="subpage">
+<?php // Inclure l'en-tête
+include("../../../inc/header.inc.php"); ?>
 <!-- Contenu de la page qui s'adapte au changement de taille-->
 <div class="container-fluid">
     <!-- Mise en page par ligne pour une meilleure adaptation -->
@@ -153,15 +148,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['titre'])) {
                                              class="bi bi-exclamation-square-fill" viewBox="0 0 16 16">
                                             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
                                         </svg>
-                                        Date
+                                        Date de notification :
                                     </label>
                                     <!-- Zone de saisie -->
                                     <label>
                                         <input type="date" name="date" required class='form-control'
-                                               value="<?php echo $marche['dateCreation_Ma']; ?>">
+                                               value="<?php echo $marche['dateNotif_Ma']; ?>">
                                     </label>
                                 </div>
                             <?php } ?>
+                            <!-- Groupement d'éléments -->
+                            <div class="form-group">
+                                <label>
+                                    <!-- Icone-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red"
+                                         class="bi bi-exclamation-square-fill" viewBox="0 0 16 16">
+                                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                                    </svg>
+                                    Durée (en jours):
+                                </label>
+                                <!-- Zone de saisie -->
+                                <label>
+                                    <input type="number" step="1" name="duree" required
+                                           value='<?php echo $marche['duree_Ma']; ?>'
+                                           class='form-control'>
+                                </label>
+                            </div>
                             <!-- Groupement d'éléments -->
                             <div class=" form-group">
                                 <label>

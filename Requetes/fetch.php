@@ -279,6 +279,8 @@ function fetchMarches($mois, $annee, $sql, $count, $param) // Définit une fonct
         $marches[] = array( // Ajoute une nouvelle marche au tableau
             'id' => $row['id_Ma'],
             'dateCreation' => $row['dateCreation_Ma'],
+            'dateNotif' => $row['dateNotif_Ma'],
+            'duree' => $row['duree_Ma'],
             'libelle' => $row['libelle_Ma'],
             'attributaire' => $attributaire,
             'codePostal' => $row['codePostal_Ma'],

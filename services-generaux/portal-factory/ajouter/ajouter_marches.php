@@ -106,7 +106,9 @@ session_start();
                             }
                             $prive = isset($_POST['prive']) ? 1 : 0;
                             $annule = isset($_POST['annule']) ? 1 : 0;
-                            $date = $_POST['date'] ?? date('Y-m-d');
+                            $date = date('Y-m-d');
+                            $datenotif = $_POST['date'] ?? date('Y-m-d');
+                            $duree = $_POST['duree'];
                             $qte = $_POST['qte'];
                             $commentaires = $_POST['commentaires'];
 
@@ -120,11 +122,13 @@ session_start();
                                 }
 
                                 // Requête SQL pour insérer les données dans la base de données
-                                $sql = "INSERT INTO marche (dateCreation_Ma, libelle_Ma, attributaire_Ma, codePostal_Ma,commune_Ma, id_Ty, id_Pr, montantHT_Ma,montantMin_Ma,montantMax_Ma, annule_Ma, prive_Ma,commentaires_Ma, id_In) VALUES (:date, :libelle, :attributaire, :codePostal,:commune, :type, :procedure, :montant,:montantMin,:montantMax, :annule, :prive,:commentaires, :id_In)";
+                                $sql = "INSERT INTO marche (dateCreation_Ma, dateNotif_Ma,duree_Ma, libelle_Ma, attributaire_Ma, codePostal_Ma,commune_Ma, id_Ty, id_Pr, montantHT_Ma,montantMin_Ma,montantMax_Ma, annule_Ma, prive_Ma,commentaires_Ma, id_In) VALUES (:date,:dateNotif,:duree, :libelle, :attributaire, :codePostal,:commune, :type, :procedure, :montant,:montantMin,:montantMax, :annule, :prive,:commentaires, :id_In)";
                                 $stmt = $pdo->prepare($sql);
 
                                 // Liaison des paramètres
                                 $stmt->bindParam(':date', $date);
+                                $stmt->bindParam(':dateNotif', $datenotif);
+                                $stmt->bindParam(':duree', $duree);
                                 $stmt->bindParam(':libelle', $libelle);
                                 $stmt->bindParam(':attributaire', $attributaire);
                                 $stmt->bindParam(':codePostal', $cp);
@@ -160,7 +164,7 @@ session_start();
                                              class="bi bi-exclamation-square-fill" viewBox="0 0 16 16">
                                             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
                                         </svg>
-                                        Date
+                                        Date de notification :
                                     </label>
                                     <!-- Zone de saisie -->
                                     <label>
@@ -168,6 +172,22 @@ session_start();
                                     </label>
                                 </div>
                             <?php } ?>
+                            <!-- Groupement d'éléments -->
+                            <div class="form-group">
+                                <label>
+                                    <!-- Icone-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red"
+                                         class="bi bi-exclamation-square-fill" viewBox="0 0 16 16">
+                                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                                    </svg>
+                                    Durée (en jours):
+                                </label>
+                                <!-- Zone de saisie -->
+                                <label>
+                                    <input type="number" step="1" name="duree" required value='0'
+                                           class='form-control'>
+                                </label>
+                            </div>
                             <!-- Groupement d'éléments -->
                             <div class="form-group">
                                 <label>

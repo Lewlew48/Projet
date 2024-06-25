@@ -93,13 +93,20 @@ session_start();
     if (isset($_SESSION['nom'])) {
         $prenom = $_SESSION['prenom'];
         $nom = $_SESSION['nom'];
-        $role = $_SESSION['role'];
-        $direction = $_SESSION['nom_dir'];
         $url = "../portal-factory/ajouter/ajouter_marches.php";
     } else {
         $url = "#\" onclick=\"alert('Veuillez vous connecter');";
     }
-
+    if (isset($_SESSION['nom_dir'])) {
+        $direction = $_SESSION['nom_dir'];
+    } else {
+        $direction = "Pas de direction";
+    }
+    if (isset($_SESSION['role'])) {
+        $role = $_SESSION['role'];
+    } else {
+        $role = "employe";
+    }
     $limite = 50;
 
     // Modifier la limite d'affichage en fonction des boutons cliqués
@@ -337,19 +344,23 @@ session_start();
                         <!-- Première ligne -->
                         <tr>
                             <!-- Id -->
-                            <th scope="col" rowspan="2">Numéro</th>
+                            <th scope="col" rowspan="2" class="col-1">Numéro</th>
                             <!-- Date de création -->
-                            <th scope="col" rowspan="2">Date de création</th>
+                            <th scope="col" rowspan="2" class="col-1">Date de création</th>
+                            <!-- Date de notification -->
+                            <th scope="col" rowspan="2" class="col-1">Date de notification</th>
+                            <!-- Durée -->
+                            <th scope="col" rowspan="2" class="col-1">Durée</th>
                             <!-- Libellé -->
-                            <th scope="col" rowspan="2">Libellé</th>
+                            <th scope="col" rowspan="2" class="col-1">Libellé</th>
                             <!-- Direction -->
-                            <th scope="col" rowspan="2">Direction</th>
+                            <th scope="col" rowspan="2" class="col-1">Direction</th>
                             <!-- Instructeur -->
-                            <th scope="col" rowspan="2">Instructeur</th>
+                            <th scope="col" rowspan="2" class="col-1">Instructeur</th>
                             <!-- Attributaire -->
                             <th scope="col" rowspan="2">Attributaire</th>
                             <!-- Adresse -->
-                            <th scope="col" colspan="2">Adresse</th>
+                            <th scope="col" rowspan="2">Adresse</th>
                             <!-- Type -->
                             <th scope="col" rowspan="2">Type</th>
                             <!-- Procédure -->
@@ -365,10 +376,6 @@ session_start();
                         </tr>
                         <!-- Eléments dans les propriétés -->
                         <tr>
-                            <!-- Code postal -->
-                            <th scope="col">Code postal</th>
-                            <!-- Commune -->
-                            <th scope="col">Cummune</th>
                             <!-- Montant HT -->
                             <th scope="col">Montant</th>
                             <!-- Montant min -->
@@ -402,21 +409,36 @@ session_start();
                                 $marche = $marches[$i];
                                 // Affichage du tableau des marchés
                                 $bloque = "";
-                                for ($j = 0; $j <= 4; $j++) {
-                                    if ($marche['direction'] == "Service des marchés" && (int)(date("W", (int)($marche['dateCreation']))) == (int)(date("W", (int)(date("Y-m-d"))) - $j) && $_SESSION['nom_dir'] != "Service des marchés") {
-                                        $bloque = $marche['id'];
+                                if ($role != "admin") {
+                                    if ($marche['direction'] == "Service des marchés") {
+                                        if (!isset($_SESSION['nom_dir']) || $_SESSION['nom_dir'] != $marche['direction']) {
+                                            // Récupérer la date de notification du marché (sous forme de chaîne)
+                                            $dateNotification = $marche['dateNotif']; // Exemple de date de notification
+
+                                            // Obtenir la date actuelle
+                                            $dateActuelle = date("Y-m-d");
+
+                                            $firstDate = new DateTime((string)$dateNotification);
+                                            $secondDate = new DateTime($dateActuelle);
+                                            $intvl = $firstDate->diff($secondDate);
+
+                                            if ($intvl->days < 28) {
+                                                $bloque = $marche['id'];
+                                            }
+                                        }
                                     }
                                 }
                                 if ($marche['id'] != $bloque) {
                                     echo '<tr>';
                                     echo '<td>' . $marche['dateCreation'][2] . $marche['dateCreation'][3] . '-' . sprintf("%04d", $marche['id']) . '</td>'; // Affichage de la date de création avec l'ID
                                     echo '<td>' . $marche['dateCreation'] . '</td>'; // Affichage de la date de création
+                                    echo '<td>' . $marche['dateNotif'] . '</td>'; // Affichage de la date de notification
+                                    echo '<td>' . $marche['duree'] . '</td>'; // Affichage de la durée
                                     echo '<td>' . $marche['libelle'] . '</td>'; // Affichage du libellé
                                     echo '<td>' . $marche['direction'] . '</td>'; // Affichage de la direction
                                     echo '<td>' . $marche['instructeur'] . '</td>'; // Affichage de l'instructeur
                                     echo '<td>' . $marche['attributaire'] . '</td>'; // Affichage de l'attributaire
-                                    echo '<td>' . $marche['codePostal'] . '</td>'; // Affichage du code postal
-                                    echo '<td>' . $marche['commune'] . '</td>'; // Affichage de la commune
+                                    echo '<td>' . $marche['codePostal'] . "--" . $marche['commune'] . '</td>'; // Affichage de l'adresse
                                     echo '<td>' . $marche['type'] . '</td>'; // Affichage du type d'accord
                                     echo '<td>' . $marche['procedure'] . '</td>'; // Affichage de la procédure
                                     echo '<td>' . $marche['montant'] . '€</td>'; // Affichage du montant en euros
@@ -476,8 +498,9 @@ session_start();
                         if ($val <= 1) {
                             // Affichage d'un message
                             echo '<tr>';
-                            echo '<td colspan="16" class="text-center">Aucune donnée trouvée</td>';
+                            echo '<td colspan="19" class="text-center">Aucune donnée trouvée</td>';
                             echo '</tr>';
+                            $limite = 0;
                         }
                         ?>
                         </tbody>
